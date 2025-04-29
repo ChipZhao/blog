@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>清风墨韵 | 个人博客</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --bg: #ffffff;
+            --text: #2c3e50;
+            --transition: all 0.3s ease;
+        }
+
+        /* 深色模式 */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #1a1a1a;
+                --text: #ecf0f1;
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+            transition: var(--transition);
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .site-title {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(45deg, var(--secondary), #8e44ad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .post-list {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .post-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .post-date {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .post-title {
+            margin: 0.5rem 0;
+            font-size: 1.5rem;
+        }
+
+        .post-excerpt {
+            color: #666;
+            margin: 1rem 0;
+        }
+
+        .read-more {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--secondary);
+            color: white;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .read-more:hover {
+            background: #2980b9;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .site-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* 深色模式切换按钮 */
+        .theme-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--secondary);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="site-title">清风墨韵</h1>
+            <p>记录技术与生活的美好时刻</p>
+        </header>
+
+        <main class="post-list">
+            <article class="post-card">
+                <div class="post-date">2023-10-15</div>
+                <h2 class="post-title">初见GitHub Pages</h2>
+                <p class="post-excerpt">今天成功部署了个人博客，记录这个值得纪念的时刻。GitHub Pages的便捷性出乎意料，配合Actions可以实现自动化部署...</p>
+                <a href="#" class="read-more">阅读全文</a>
+            </article>
+
+            <article class="post-card">
+                <div class="post-date">2023-10-12</div>
+                <h2 class="post-title">现代CSS开发实践</h2>
+                <p class="post-excerpt">探索CSS Grid和Flexbox的完美配合，如何用现代CSS特性打造响应式布局...</p>
+                <a href="#" class="read-more">阅读全文</a>
+            </article>
+        </main>
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()"></button>
+
+    <script>
+        // 主题切换功能
+        function toggleTheme() {
+            const root = document.documentElement;
+            const isDark = root.style.getPropertyValue('--bg') === '#1a1a1a';
+            
+            root.style.setProperty('--bg', isDark ? '#ffffff' : '#1a1a1a');
+            root.style.setProperty('--text', isDark ? '#2c3e50' : '#ecf0f1');
+        }
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 图片懒加载
+        const lazyImages = document.querySelectorAll('img[data-src]');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    observer.unobserve(img);
+                }
+            });
+        });
+
+        lazyImages.forEach(img => observer.observe(img));
+    </script>
+</body>
+</html>
