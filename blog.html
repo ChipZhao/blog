@@ -3,184 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>清风墨韵 | 个人博客</title>
+    <title>技术探索者 | 个人博客</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --bg: #ffffff;
-            --text: #2c3e50;
-            --transition: all 0.3s ease;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
         }
 
-        /* 深色模式 */
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg: #1a1a1a;
-                --text: #ecf0f1;
-            }
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --text-color: #34495e;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             line-height: 1.6;
-            color: var(--text);
-            background: var(--bg);
-            transition: var(--transition);
-            margin: 0;
-            padding: 2rem;
+            color: var(--text-color);
         }
 
-        .container {
-            max-width: 800px;
+        /* 导航栏样式 */
+        .navbar {
+            background: var(--primary-color);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-links {
+            max-width: 1200px;
             margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s;
         }
 
-        .site-title {
-            font-size: 2.5rem;
-            margin: 0;
-            background: linear-gradient(45deg, var(--secondary), #8e44ad);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .nav-links a:hover {
+            color: var(--secondary-color);
         }
 
-        .post-list {
+        /* 主要内容区域 */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
             display: grid;
+            grid-template-columns: 3fr 1fr;
             gap: 2rem;
         }
 
-        .post-card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+        /* 文章卡片 */
+        .article-card {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
         }
 
-        .post-card:hover {
+        .article-card:hover {
             transform: translateY(-5px);
         }
 
-        .post-date {
+        .article-date {
             color: #7f8c8d;
             font-size: 0.9rem;
         }
 
-        .post-title {
-            margin: 0.5rem 0;
-            font-size: 1.5rem;
+        /* 侧边栏 */
+        .sidebar {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 8px;
         }
 
-        .post-excerpt {
-            color: #666;
+        .profile img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
             margin: 1rem 0;
-        }
-
-        .read-more {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background: var(--secondary);
-            color: white;
-            border-radius: 25px;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .read-more:hover {
-            background: #2980b9;
         }
 
         /* 响应式设计 */
         @media (max-width: 768px) {
-            body {
-                padding: 1rem;
+            .container {
+                grid-template-columns: 1fr;
             }
             
-            .site-title {
-                font-size: 2rem;
+            .nav-links {
+                flex-direction: column;
+                text-align: center;
             }
-        }
-
-        /* 深色模式切换按钮 */
-        .theme-toggle {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--secondary);
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1 class="site-title">清风墨韵</h1>
-            <p>记录技术与生活的美好时刻</p>
-        </header>
+    <nav class="navbar">
+        <div class="nav-links">
+            <a href="/">首页</a>
+            <div>
+                <a href="#about">关于</a>
+                <a href="#archives">归档</a>
+                <a href="#contact">联系</a>
+            </div>
+        </div>
+    </nav>
 
-        <main class="post-list">
-            <article class="post-card">
-                <div class="post-date">2023-10-15</div>
-                <h2 class="post-title">初见GitHub Pages</h2>
-                <p class="post-excerpt">今天成功部署了个人博客，记录这个值得纪念的时刻。GitHub Pages的便捷性出乎意料，配合Actions可以实现自动化部署...</p>
-                <a href="#" class="read-more">阅读全文</a>
+    <div class="container">
+        <main>
+            <article class="article-card">
+                <small class="article-date">2024年2月20日</small>
+                <h2>探索人工智能的伦理边界</h2>
+                <p>随着生成式AI的快速发展，我们需要重新审视技术应用的道德框架...（文章摘要）</p>
+                <a href="#" class="read-more">阅读全文 →</a>
             </article>
 
-            <article class="post-card">
-                <div class="post-date">2023-10-12</div>
-                <h2 class="post-title">现代CSS开发实践</h2>
-                <p class="post-excerpt">探索CSS Grid和Flexbox的完美配合，如何用现代CSS特性打造响应式布局...</p>
-                <a href="#" class="read-more">阅读全文</a>
+            <article class="article-card">
+                <small class="article-date">2024年2月18日</small>
+                <h2>Web3.0时代的身份验证机制</h2>
+                <p>去中心化身份（DID）正在改变我们对数字身份管理的认知...（文章摘要）</p>
+                <a href="#" class="read-more">阅读全文 →</a>
             </article>
         </main>
+
+        <aside class="sidebar">
+            <div class="profile">
+                <img src="https://via.placeholder.com/120" alt="作者头像">
+                <h3>技术探索者</h3>
+                <p>全栈开发者 & 技术写作者</p>
+            </div>
+
+            <div class="social-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+
+            <div class="categories">
+                <h4>文章分类</h4>
+                <ul>
+                    <li><a href="#">人工智能</a></li>
+                    <li><a href="#">Web开发</a></li>
+                    <li><a href="#">区块链</a></li>
+                </ul>
+            </div>
+        </aside>
     </div>
 
-    <button class="theme-toggle" onclick="toggleTheme()"></button>
-
     <script>
-        // 主题切换功能
-        function toggleTheme() {
-            const root = document.documentElement;
-            const isDark = root.style.getPropertyValue('--bg') === '#1a1a1a';
-            
-            root.style.setProperty('--bg', isDark ? '#ffffff' : '#1a1a1a');
-            root.style.setProperty('--text', isDark ? '#2c3e50' : '#ecf0f1');
-        }
-
-        // 平滑滚动
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+        // 简单的交互动画
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', e => {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                // 实际使用时应移除preventDefault()
             });
         });
 
-        // 图片懒加载
-        const lazyImages = document.querySelectorAll('img[data-src]');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    observer.unobserve(img);
+        // 滚动动画
+        window.addEventListener('scroll', () => {
+            const articles = document.querySelectorAll('.article-card');
+            articles.forEach(article => {
+                const position = article.getBoundingClientRect();
+                if(position.top < window.innerHeight) {
+                    article.style.opacity = '1';
                 }
             });
         });
-
-        lazyImages.forEach(img => observer.observe(img));
     </script>
 </body>
 </html>
