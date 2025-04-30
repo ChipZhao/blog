@@ -1,0 +1,140 @@
+<!-- 博文1：去中心化身份管理系统架构 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>构建去中心化身份管理系统</title>
+    <style>
+        /* 保持与前文一致的样式体系 */
+        body { font-family: system-ui; max-width: 800px; margin: auto; padding: 20px; }
+        .architecture-diagram { background: #f0f4f8; padding: 20px; border-radius: 12px; margin: 15px 0; }
+        .solidity-code { background: #1e1e1e; color: #dcdcdc; padding: 15px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <article>
+        <h1>去中心化身份管理系统架构设计</h1>
+        
+        <section>
+            <h2>系统核心组件</h2>
+            <div class="architecture-diagram">
+                <pre>
+                +---------------------+
+                | 身份持有者 (钱包)    |
+                +----------+----------+
+                           ↓
+                +----------+----------+
+                | 身份解析器 (DID Resolver) |
+                +----------+----------+
+                           ↓
+                +----------+----------+
+                | 验证协议层 (VC/VP)   |
+                +----------+----------+
+                           ↓
+                +----------+----------+
+                | 存储层 (IPFS/Arweave)|
+                +---------------------+</pre>
+            </div>
+        </section>
+
+        <section>
+            <h2>智能合约实现示例</h2>
+            <div class="solidity-code">
+                <code>
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract DIDRegistry {
+    struct Identity {
+        address owner;
+        string docCID; // IPFS内容标识
+        uint256 created;
+    }
+    
+    mapping(bytes32 => Identity) public identities;
+    
+    event DIDCreated(bytes32 indexed did);
+    
+    function createDID(string memory docCID) public {
+        bytes32 did = keccak256(abi.encodePacked(msg.sender, block.timestamp));
+        identities[did] = Identity(msg.sender, docCID, block.timestamp);
+        emit DIDCreated(did);
+    }
+}
+                </code>
+            </div>
+        </section>
+    </article>
+</body>
+</html>
+
+<!-- 博文2：跨链身份协议 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>跨链身份互操作协议</title>
+    <style>
+        .flow-chart { background: #fff5e6; padding: 20px; border-left: 4px solid #ff9900; }
+        .protocol-comparison { border-collapse: collapse; width: 100%; }
+        .protocol-comparison td, .protocol-comparison th { border: 1px solid #ddd; padding: 8px; }
+    </style>
+</head>
+<body>
+    <article>
+        <h1>跨链身份互操作协议深度解析</h1>
+        
+        <section>
+            <h2>跨链验证流程</h2>
+            <div class="flow-chart">
+                <p>1. 用户发起跨链请求 → 2. 源链生成zkProof → 3. 目标链验证证明 → 4. 生成镜像身份</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>主流协议对比</h2>
+            <table class="protocol-comparison">
+                <tr>
+                    <th>协议</th>
+                    <th>技术栈</th>
+                    <th>TPS</th>
+                    <th>支持链</th>
+                </tr>
+                <tr>
+                    <td>Chainlink DECO</td>
+                    <td>TLS+零知识证明</td>
+                    <td>100+</td>
+                    <td>EVM兼容链</td>
+                </tr>
+                <tr>
+                    <td>IBC Protocol</td>
+                    <td>Tendermint共识</td>
+                    <td>1000+</td>
+                    <td>Cosmos生态</td>
+                </tr>
+                <tr>
+                    <td>XCMP</td>
+                    <td>Substrate框架</td>
+                    <td>5000+</td>
+                    <td>波卡平行链</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>跨链验证伪代码</h2>
+            <pre class="solidity-code">
+async function crossChainVerify(sourceChain, targetChain, did) {
+    const proof = await zkSnark.generateProof(sourceChain, did);
+    const isValid = await targetChain.verifyProof(proof);
+    
+    if (isValid) {
+        const mirrorDID = await targetChain.mintSBT(did);
+        return mirrorDID;
+    }
+    throw new Error('Verification failed');
+}</pre>
+        </section>
+    </article>
+</body>
+</html>
